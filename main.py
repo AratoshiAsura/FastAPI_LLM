@@ -14,7 +14,7 @@ class ChatResponse(BaseModel):
 
 @app.get("/health")
 async def health():
-    return {"status": "OK"}
+    return {"status": "ok"}
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(req: ChatRequest):
