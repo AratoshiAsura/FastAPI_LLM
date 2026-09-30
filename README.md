@@ -33,3 +33,19 @@ curl -X POST http://127.0.0.1:8000/chat \
 ```bash
 pytest -v
 ```
+## Docker
+
+### Сборка
+```bash
+docker build -t fastapi-llm .
+```
+
+### Запуск
+```bash
+docker run -p 8000:8000 --env-file .env fastapi-llm
+```
+
+### Проверка
+```bash
+curl http://localhost:8000/health
+```
