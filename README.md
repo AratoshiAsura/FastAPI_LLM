@@ -49,3 +49,13 @@ docker run -p 8000:8000 --env-file .env fastapi-llm
 ```bash
 curl http://localhost:8000/health
 ```
+## Хранение истории
+
+Сервис сохраняет диалоги в SQLite через SQLAlchemy (async).
+
+- `GET /history` — последние N сообщений из всех чатов
+- `GET /history/{chat_id}` — история конкретного чата
+
+## Обработка ошибок
+
+При ошибке LLM клиент получает `502 Bad Gateway`, запись в БД не создаётся.
