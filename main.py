@@ -25,7 +25,10 @@ async def health():
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(req: ChatRequest, db: AsyncSession = Depends(get_db)):
-    answer = await ask_llm(req.message)
+    try:
+        answer = await ask_llm(req.message)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"LLM error: {e}")
 
     msg = ChatMessage(
         chat_id=req.chat_id,
