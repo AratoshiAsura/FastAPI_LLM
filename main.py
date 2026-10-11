@@ -1,4 +1,8 @@
+from contextlib import asynccontextmanager
+#from turtle import title
+
 from fastapi import Depends, FastAPI, HTTPException
+from contextlib import asynccontextmanager
 from llm import ask_llm
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,11 +10,16 @@ from database import get_db, init_db, Base
 from models import ChatMessage
 from schemas import ChatRequest, ChatResponse, HistoryItem
 
-app =FastAPI(title="LLM API", version="0.2.0")
-
-@app.on_event("startup")
-async def startup():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     await init_db()
+    yield
+
+app =FastAPI(title="LLM API", version="0.2.0", lifespan=lifespan)
+
+#@app.on_event("startup")
+#async def startup():
+#    await init_db()
 
 #class ChatRequest(BaseModel):
     #message: str
